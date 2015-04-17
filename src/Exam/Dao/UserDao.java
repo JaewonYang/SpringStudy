@@ -2,17 +2,24 @@ package Exam.Dao;
 /**
  * Created by Jaewon on 2015-04-17.
  */
-import java.sql.*;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 public class UserDao {
-    private ConnectionMaker connectionMaker;
-    public UserDao(ConnectionMaker connectionMaker){
-        this.connectionMaker = connectionMaker;
+
+    private  dataSource;
+    private  DataSource dataSource;
+
+    public void setDataSource(DataSource dataSource){
+        this.dataSource = dataSource;
     }
     public UserDao(){
 
     }
-    public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection connection = connectionMaker.getConnection();
+    public static User get(String id) throws ClassNotFoundException, SQLException {
+        Connection connection = dataSource.getConnection();
 
         String sql = "select id, name, password from userinfo where id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -31,8 +38,8 @@ public class UserDao {
         return user;
     }
 
-    public void add(User user) throws SQLException, ClassNotFoundException {
-        Connection connection = connectionMaker.getConnection();
+    public static void add(User user) throws SQLException, ClassNotFoundException {
+        Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "insert into userinfo(id, name, password) values(?,?,?)");
 
@@ -46,7 +53,5 @@ public class UserDao {
         connection.close();
     }
 
-    public void setConncetionMaker(ConnectionMaker conncetionMaker) {
-        this.connectionMaker =  conncetionMaker;
-    }
+
 }

@@ -4,7 +4,6 @@ package Exam.Test;
  * Created by Jaewon on 2015-04-17.
  */
 
-import Exam.Dao.DaoFactory;
 import Exam.Dao.User;
 import Exam.Dao.UserDao;
 import org.junit.Before;
@@ -27,7 +26,7 @@ public class UserDaoTest {
     }
     @Test
     public void get() throws ClassNotFoundException, SQLException {
-        UserDao userDao = new DaoFactory().getUserDao();
+//        UserDao userDao = new DaoFactory().getUserDao();
         String id = String.valueOf(new Random().nextInt());
         String name = "허윤호";
         String password = "1111";
@@ -44,11 +43,11 @@ public class UserDaoTest {
         user.setName("허윤호");
         user.setPassword("1234");
 
-        UserDao DUserDao = new DaoFactory().getUserDao();
-        DUserDao.add(user);
-        User addedUser = DUserDao.get(user.getId());
-        User addedId = DUserDao.get(user.getName());
-        User addedPassword = DUserDao.get(user.getPassword());
+
+        UserDao.add(user);
+        User addedUser =UserDao.get(user.getId());
+        User addedId = UserDao.get(user.getName());
+        User addedPassword = UserDao.get(user.getPassword());
 
         assertEquals("10", addedUser.getId());
         assertEquals("허윤호", addedId.getName());
